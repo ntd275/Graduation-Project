@@ -1,0 +1,90 @@
+.home {
+    .content {
+        padding-top: 56px;
+        .left-side-bar {
+            position: fixed;
+            width: 360px;
+            padding-top: 16px;
+            .item {
+                display: flex;
+                align-items: center;
+                margin-left: 8px;
+                padding-right: 8px;
+                width: 100%;
+                height: 52px;
+                border-radius: 5px;
+                .text {
+                    font-weight: 500;
+                    font-size: .9375rem;
+                    margin-left: 12px;
+                }
+                &:hover {
+                    background-color: #e4e6e9;
+                }
+            }
+        }
+        .right-side-bar {
+            padding-top: 16px;
+            width: 360px;
+            position: fixed;
+            right: 8px;
+            .contact {
+                color: #65676B;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+            .item {
+                display: flex;
+                align-items: center;
+                margin-left: 8px;
+                margin-right: 8px;
+                height: 52px;
+                border-radius: 5px;
+                .text {
+                    font-size: .9375rem;
+                    color: #050505;
+                    margin-left: 12px;
+                    font-weight: 500;
+                }
+                &:hover {
+                    background-color: #e4e6e9;
+                }
+            }
+        }
+        .posts {
+            margin-left: 360px;
+            margin-right: 360px;
+            display: flex;
+            justify-content: center;
+            .container {
+                width: 680px;
+                .create-post {
+                    margin-top: 20px;
+                    background-color: #fff;
+                    border-radius: 10px;
+                    height: 123px;
+                    padding-top: 12px;
+                    padding-bottom: 10px;
+                    padding-left: 16px;
+                    padding-right: 16px;
+                    .top {
+                        display: flex;
+                        .input {
+                            padding: 8px 12px;
+                            background-color: #f0f2f5;
+                            border-radius: 20px;
+                            flex-grow: 1;
+                            margin-left: 8px;
+                            cursor: pointer;
+                            color: #65676B;
+                            font-size: 1.0625rem;
+                            &:hover {
+                                background-color: #e4e6e9
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
