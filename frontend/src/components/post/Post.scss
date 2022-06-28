@@ -1,0 +1,97 @@
+.post-container {
+    margin-top: 16px;
+    width: 680px;
+    border-radius: 10px;
+    background-color: #fff;
+    .post-header {
+        width: 100%;
+        padding-top: 12px;
+        padding-left: 16px;
+        padding-right: 16px;
+        margin-bottom: 12px;
+        display: flex;
+        .post-info {
+            margin-left: 8px;
+            .user-name {
+                font-weight: 600;
+                cursor: pointer;
+                line-height: 1.3333;
+                font-size: 15px;
+            }
+            .time {
+                font-size: 13px;
+                font-weight: 400;
+                cursor: pointer;
+                color: rgb(101, 103, 107);
+            }
+        }
+        .options {
+            margin-left: auto;
+            align-self: center;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+                background-color: #f2f2f2;
+            }
+        }
+    }
+    .post-content {
+        padding-top: 4px;
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-bottom: 16px;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 28px;
+    }
+    .post-reactions {
+        height: 42px;
+        margin-left: 16px;
+        margin-right: 16px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display: flex;
+        border-bottom: solid 1px rgb(206, 208, 212);
+        .number-like {
+            font-size: 15px;
+            padding-left: 6px;
+            line-height: 20px;
+            color: rgb(101, 103, 107);
+        }
+        .number-comment {
+            font-size: 15px;
+            line-height: 20px;
+            color: rgb(101, 103, 107);
+            margin-left: auto;
+        }
+        .number-share {
+            margin-left: 6px;
+            font-size: 15px;
+            line-height: 20px;
+            color: rgb(101, 103, 107);
+        }
+    }
+    .post-actions {
+        height: 52px;
+        margin-left: 12px;
+        margin-right: 12px;
+        display: flex;
+        .button {
+            width: 33.3%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: rgb(101, 103, 107);
+            font-weight: 600;
+            div {
+                margin-left: 6px;
+            }
+        }
+    }
+}
