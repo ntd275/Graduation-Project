@@ -44,6 +44,23 @@ function Post() {
           <div>Chia sẻ</div>
         </div>
       </div>
+      <div className="comment-container">
+        <div className="h-ruler"></div>
+        <div className="comment">
+          <Avatar sx={{ width: 32, height: 32 }} src={Images.user}></Avatar>
+          <div className="comment-content">
+            <div className="user-name">Nguyễn Thế Đức</div>
+            <div className="comment-message">Hello</div>
+          </div>
+          <div className="options">
+            <IconThreeDot/>
+          </div>
+        </div>
+        <div className="add-comment">
+          <Avatar sx={{ width: 32, height: 32 }} src={Images.user}></Avatar>
+          <input className="comment-input" placeholder='Viết bình luận...'></input>
+        </div>
+      </div>
     </div>
   );
 }
