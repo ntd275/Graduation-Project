@@ -6,6 +6,7 @@
             width: 360px;
             padding-top: 16px;
             .item {
+                cursor: pointer;
                 display: flex;
                 align-items: center;
                 margin-left: 8px;
@@ -40,6 +41,7 @@
                 margin-right: 8px;
                 height: 52px;
                 border-radius: 5px;
+                cursor: pointer;
                 .text {
                     font-size: .9375rem;
                     color: #050505;

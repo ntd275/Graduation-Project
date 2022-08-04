@@ -78,6 +78,169 @@ function IconShare() {
   return <i className="i-icon-share"></i>;
 }
 
+function IconCall() {
+  return (
+    <svg role="presentation" width="26px" height="26px" viewBox="-5 -5 30 30">
+      <path
+        d="M10.952 14.044c.074.044.147.086.22.125a.842.842 0 001.161-.367c.096-.195.167-.185.337-.42.204-.283.552-.689.91-.772.341-.078.686-.105.92-.11.435-.01 1.118.174 1.926.648a15.9 15.9 0 011.713 1.147c.224.175.37.43.393.711.042.494-.034 1.318-.754 2.137-1.135 1.291-2.859 1.772-4.942 1.088a17.47 17.47 0 01-6.855-4.212 17.485 17.485 0 01-4.213-6.855c-.683-2.083-.202-3.808 1.09-4.942.818-.72 1.642-.796 2.136-.754.282.023.536.17.711.392.25.32.663.89 1.146 1.714.475.808.681 1.491.65 1.926-.024.31-.026.647-.112.921-.11.35-.488.705-.77.91-.236.17-.226.24-.42.336a.841.841 0 00-.368 1.161c.04.072.081.146.125.22a14.012 14.012 0 004.996 4.996z"
+        fill="#0084ff"
+      ></path>
+      <path
+        d="M10.952 14.044c.074.044.147.086.22.125a.842.842 0 001.161-.367c.096-.195.167-.185.337-.42.204-.283.552-.689.91-.772.341-.078.686-.105.92-.11.435-.01 1.118.174 1.926.648.824.484 1.394.898 1.713 1.147.224.175.37.43.393.711.042.494-.034 1.318-.754 2.137-1.135 1.291-2.859 1.772-4.942 1.088a17.47 17.47 0 01-6.855-4.212 17.485 17.485 0 01-4.213-6.855c-.683-2.083-.202-3.808 1.09-4.942.818-.72 1.642-.796 2.136-.754.282.023.536.17.711.392.25.32.663.89 1.146 1.714.475.808.681 1.491.65 1.926-.024.31-.026.647-.112.921-.11.35-.488.705-.77.91-.236.17-.226.24-.42.336a.841.841 0 00-.368 1.161c.04.072.081.146.125.22a14.012 14.012 0 004.996 4.996z"
+        stroke="#0084ff"
+        fill="#0084ff"
+      ></path>
+    </svg>
+  );
+}
+
+function IconVideoCall() {
+  return (
+    <svg role="presentation" width="26px" height="26px" viewBox="-3 -5 30 30">
+      <path
+        d="M19.492 4.112a.972.972 0 00-1.01.063l-3.052 2.12a.998.998 0 00-.43.822v5.766a1 1 0 00.43.823l3.051 2.12a.978.978 0 001.011.063.936.936 0 00.508-.829V4.94a.936.936 0 00-.508-.828zM10.996 18A3.008 3.008 0 0014 14.996V5.004A3.008 3.008 0 0010.996 2H3.004A3.008 3.008 0 000 5.004v9.992A3.008 3.008 0 003.004 18h7.992z"
+        fill="#0084ff"
+      ></path>
+    </svg>
+  );
+}
+
+function IconMinimum() {
+  return (
+    <svg width="26px" height="26px" viewBox="-4 -4 24 24">
+      <line
+        x1="2"
+        x2="14"
+        y1="8"
+        y2="8"
+        strokeLinecap="round"
+        strokeWidth="2"
+        stroke="#0084ff"
+      ></line>
+    </svg>
+  );
+}
+
+function IconClose() {
+  return (
+    <svg width="24px" height="24px" viewBox="0 0 24 24">
+      <g strokeLinecap="round" strokeWidth="2" stroke="#0084ff">
+        <line x1="6" x2="18" y1="6" y2="18"></line>
+        <line x1="6" x2="18" y1="18" y2="6"></line>
+      </g>
+    </svg>
+  );
+}
+
+function IconNewChat() {
+  return <i className="i-icon-new-chat"></i>;
+}
+
+function IconAddImage() {
+  return (
+    <svg
+      viewBox="0 -1 17 17"
+      height="20px"
+      width="20px"
+      className="i-icon-add-image"
+    >
+      <g fill="none" fillRule="evenodd">
+        <path
+          d="M2.882 13.13C3.476 4.743 3.773.48 3.773.348L2.195.516c-.7.1-1.478.647-1.478 1.647l1.092 11.419c0 .5.2.9.4 1.3.4.2.7.4.9.4h.4c-.6-.6-.727-.951-.627-2.151z"
+          fill="#0084ff"
+        ></path>
+        <circle cx="8.5" cy="4.5" r="1.5" fill="#0084ff"></circle>
+        <path
+          d="M14 6.2c-.2-.2-.6-.3-.8-.1l-2.8 2.4c-.2.1-.2.4 0 .6l.6.7c.2.2.2.6-.1.8-.1.1-.2.1-.4.1s-.3-.1-.4-.2L8.3 8.3c-.2-.2-.6-.3-.8-.1l-2.6 2-.4 3.1c0 .5.2 1.6.7 1.7l8.8.6c.2 0 .5 0 .7-.2.2-.2.5-.7.6-.9l.6-5.9L14 6.2z"
+          fill="#0084ff"
+        ></path>
+        <path
+          d="M13.9 15.5l-8.2-.7c-.7-.1-1.3-.8-1.3-1.6l1-11.4C5.5 1 6.2.5 7 .5l8.2.7c.8.1 1.3.8 1.3 1.6l-1 11.4c-.1.8-.8 1.4-1.6 1.3z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          stroke="#0084ff"
+        ></path>
+      </g>
+    </svg>
+  );
+}
+
+function IconLike3() {
+  return (
+    <svg viewBox="0 0 16 16" height="20" width="20">
+      <path
+        fill="#0084ff"
+        d="M16,9.1c0-0.8-0.3-1.1-0.6-1.3c0.2-0.3,0.3-0.7,0.3-1.2c0-1-0.8-1.7-2.1-1.7h-3.1c0.1-0.5,0.2-1.3,0.2-1.8 c0-1.1-0.3-2.4-1.2-3C9.3,0.1,9,0,8.7,0C8.1,0,7.7,0.2,7.6,0.4C7.5,0.5,7.5,0.6,7.5,0.7L7.6,3c0,0.2,0,0.4-0.1,0.5L5.7,6.6 c0,0-0.1,0.1-0.1,0.1l0,0l0,0L5.3,6.8C5.1,7,5,7.2,5,7.4v6.1c0,0.2,0.1,0.4,0.2,0.5c0.1,0.1,1,1,2,1h5.2c0.9,0,1.4-0.3,1.8-0.9 c0.3-0.5,0.2-1,0.1-1.4c0.5-0.2,0.9-0.5,1.1-1.2c0.1-0.4,0-0.8-0.2-1C15.6,10.3,16,9.9,16,9.1z"
+      ></path>
+      <path
+        fill="#0084ff"
+        d="M3.3,6H0.7C0.3,6,0,6.3,0,6.7v8.5C0,15.7,0.3,16,0.7,16h2.5C3.7,16,4,15.7,4,15.3V6.7C4,6.3,3.7,6,3.3,6z"
+      ></path>
+    </svg>
+  );
+}
+
+function IconOption() {
+  return (
+    <svg width="22px" height="22px" viewBox="0 0 22 22">
+      <circle cx="11" cy="6" r="2" strokeWidth="1px" fill="#8A8D91"></circle>
+      <circle cx="11" cy="11" r="2" strokeWidth="1px" fill="#8A8D91"></circle>
+      <circle cx="11" cy="16" r="2" strokeWidth="1px" fill="#8A8D91"></circle>
+    </svg>
+  );
+}
+
+function IconEdit() {
+  return (
+    <img
+      src="https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/tmaz0VO75BB.png"
+      alt=""
+      height="16"
+      width="16"
+    ></img>
+  );
+}
+
+function IconClose2() {
+  return <i className="i-icon-close-2"></i>;
+}
+
+function IconFriend() {
+  return <i className="i-icon-friend"></i>;
+}
+
+function IconInviteFriend() {
+  return <i className="i-icon-invite-friend"></i>;
+}
+
+function IconSuggestFriend() {
+  return <i className="i-icon-suggest-friend"></i>;
+}
+
+function IconAllFriend() {
+  return <i className="i-icon-all-friend"></i>;
+}
+
+function IconClose3() {
+  return <i className="i-icon-close-3"></i>;
+}
+
+function IconPrev() {
+  return <i className="i-icon-prev"></i>;
+}
+
+function IconNext() {
+  return <i className="i-icon-next"></i>;
+}
+
+function IconLikeActive() {
+  return <i className="i-icon-like-active"></i>;
+}
+
+function IconAddFriend() {
+  return <img className="i-icon-add-friend" src="https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/hh5EAPNUrPP.png" alt="" height="16" width="16"></img>
+}
+
 export {
   IconVideo,
   IconImage,
@@ -86,4 +249,23 @@ export {
   IconLike2,
   IconComment,
   IconShare,
+  IconCall,
+  IconVideoCall,
+  IconMinimum,
+  IconClose,
+  IconNewChat,
+  IconAddImage,
+  IconLike3,
+  IconOption,
+  IconEdit,
+  IconClose2,
+  IconFriend,
+  IconInviteFriend,
+  IconSuggestFriend,
+  IconAllFriend,
+  IconClose3,
+  IconPrev,
+  IconNext,
+  IconLikeActive,
+  IconAddFriend,
 };

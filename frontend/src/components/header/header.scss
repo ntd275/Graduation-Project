@@ -10,6 +10,7 @@
     .logo {
         padding-left: 10px;
         .logo-img {
+            cursor: pointer;
             width: 50px;
         }
     }
@@ -50,6 +51,7 @@
             font-size: .9375rem;
             color: #050505;
             font-weight: 500;
+            cursor: pointer;
         }
     }
 }
