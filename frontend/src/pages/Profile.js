@@ -25,6 +25,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useSnackbar } from "notistack";
 import { updateAuthState } from "../reduxs/slices/authSlice";
 import { updateChatState } from "../reduxs/slices/chatSlice";
+import { updatePostState } from "../reduxs/slices/postSlice";
+import Gallery from "react-grid-gallery";
 
 function Profile() {
     const [tabIndex, setTabIndex] = useState(0);
@@ -51,6 +53,8 @@ function Profile() {
     const [isChangeAvatarImageMenuOpen, setIsChangeAvatarImageMenuOpen] =
         useState(false);
     const [coverImageMenuPos, setCoverImageMenuPos] = useState(null);
+    const [imageList, setImageList] = useState([]);
+    const [videoList, setVideoList] = useState([]);
 
     const getPosts = async () => {
         try {
@@ -61,6 +65,31 @@ function Profile() {
             console.log(err);
         }
     };
+
+    useEffect(() => {
+        const imageListTemp = [];
+        const videoListTemp = [];
+        postList.forEach((post) => {
+            try {
+                const files = JSON.parse(post.files);
+                files.forEach((file) => {
+                    if (file.type === "image") {
+                        imageListTemp.push({
+                            postId: post.postId,
+                            content: file.content,
+                        });
+                    } else {
+                        videoListTemp.push({
+                            postId: post.postId,
+                            content: file.content,
+                        });
+                    }
+                });
+            } catch (err) {}
+        });
+        setImageList(imageListTemp);
+        setVideoList(videoListTemp);
+    }, [postList]);
 
     const getAccount = async () => {
         try {
@@ -485,159 +514,245 @@ function Profile() {
                 </div>
             </div>
             <div className="profile-content">
-                <div className="main-content">
-                    <div className="col-1">
-                        <div className="intro">
-                            <div className="title">Giới thiệu</div>
-                            <div className="description">
-                                <div className="row">
-                                    <div className="name">Sống tại</div>
-                                    <div className="value">
-                                        {account.address || "Không rõ"}
+                {tabIndex === 0 && (
+                    <div className="main-content">
+                        <div className="col-1">
+                            <div className="intro">
+                                <div className="title">Giới thiệu</div>
+                                <div className="description">
+                                    <div className="row">
+                                        <div className="name">Sống tại</div>
+                                        <div className="value">
+                                            {account.address || "Không rõ"}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="name">Sinh nhật</div>
-                                    <div className="value">
-                                        {account.dateOfBirth &&
-                                            formatDate(
-                                                new Date(account.dateOfBirth)
-                                            )}
+                                    <div className="row">
+                                        <div className="name">Sinh nhật</div>
+                                        <div className="value">
+                                            {account.dateOfBirth &&
+                                                formatDate(
+                                                    new Date(
+                                                        account.dateOfBirth
+                                                    )
+                                                )}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="name">Giới tính</div>
-                                    <div className="value">
-                                        {!!account.gender ? "Nam" : "Nữ"}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="image-container">
-                            <div className="title">Ảnh</div>
-                            <div className="row">
-                                <div className="image">
-                                    <img src={Images.user} alt="" />
-                                </div>
-                                <div className="image">
-                                    <img src={Images.user} alt="" />
-                                </div>
-                                <div className="image">
-                                    <img src={Images.user} alt="" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="friend-container">
-                            <div className="title">Bạn bè</div>
-                            <div className="row">
-                                <div className="image">
-                                    <img src={Images.user} alt="" />
-                                    <div className="username">
-                                        Nguyễn Thế Đức
-                                    </div>
-                                </div>
-                                <div className="image">
-                                    <img src={Images.user} alt="" />
-                                    <div className="username">
-                                        Nguyễn Thế Đức
-                                    </div>
-                                </div>
-                                <div className="image">
-                                    <img src={Images.user} alt="" />
-                                    <div className="username">
-                                        Nguyễn Thế Đức
+                                    <div className="row">
+                                        <div className="name">Giới tính</div>
+                                        <div className="value">
+                                            {!!account.gender ? "Nam" : "Nữ"}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="col-2">
-                        <div className="posts">
-                            <div className="container">
-                                {auth.accountId === account.accountId && (
-                                    <div className="create-post">
-                                        <div className="top">
-                                            <Avatar
+                            <div className="image-container">
+                                <div className="title">Ảnh</div>
+                                <div className="row">
+                                    {imageList.slice(-3).map((i) => (
+                                        <div
+                                            key={i.content}
+                                            className="image"
+                                            onClick={() => {
+                                                dispatch(
+                                                    updatePostState({
+                                                        isOpenPostDetail: true,
+                                                        postDetailId: i.postId,
+                                                    })
+                                                );
+                                            }}
+                                        >
+                                            <img
+                                                src={`${baseUrl}/${i.content}`}
+                                                alt=""
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="friend-container">
+                                <div className="title">Bạn bè</div>
+                                <div className="row">
+                                    {friendList.slice(-3).map((i) => (
+                                        <div
+                                            key={i.accountId}
+                                            className="image"
+                                            onClick={() =>
+                                                navigate(
+                                                    `/profile/${i.accountId}`
+                                                )
+                                            }
+                                        >
+                                            <img
                                                 src={
-                                                    auth.avatar
-                                                        ? `${baseUrl}/${auth.avatar}`
+                                                    i.avatar
+                                                        ? `${baseUrl}/${i.avatar}`
                                                         : Images.defaultAvatar
                                                 }
-                                            ></Avatar>
-                                            <div
-                                                className="input"
-                                                onClick={() =>
-                                                    openCreatePostModal()
-                                                }
-                                            >
-                                                Bạn đang nghĩ gì?
+                                                alt=""
+                                            />
+                                            <div className="username">
+                                                {i.name}
                                             </div>
                                         </div>
-                                        <div className="bottom">
-                                            <div
-                                                className="button"
-                                                onClick={() =>
-                                                    openCreatePostModal()
-                                                }
-                                            >
-                                                <IconImage />
-                                                <div>Ảnh</div>
-                                            </div>
-                                            <div
-                                                className="button"
-                                                onClick={() =>
-                                                    openCreatePostModal()
-                                                }
-                                            >
-                                                <IconVideo />
-                                                <div>Video</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                                <div className="post-list">
-                                    {postList.map((post) => (
-                                        <Post
-                                            key={post.postId}
-                                            refreshPost={getPosts}
-                                            {...post}
-                                        />
                                     ))}
-                                    <div
-                                        style={{
-                                            height:
-                                                postList.length === 0
-                                                    ? 600
-                                                    : 200,
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            paddingTop: 20,
-                                            maxHeight: "auto",
-                                        }}
-                                    >
-                                        {postList.length === 0 &&
-                                            "Không có bài đăng nào"}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-2">
+                            <div className="posts">
+                                <div className="container">
+                                    {auth.accountId === account.accountId && (
+                                        <div className="create-post">
+                                            <div className="top">
+                                                <Avatar
+                                                    src={
+                                                        auth.avatar
+                                                            ? `${baseUrl}/${auth.avatar}`
+                                                            : Images.defaultAvatar
+                                                    }
+                                                ></Avatar>
+                                                <div
+                                                    className="input"
+                                                    onClick={() =>
+                                                        openCreatePostModal()
+                                                    }
+                                                >
+                                                    Bạn đang nghĩ gì?
+                                                </div>
+                                            </div>
+                                            <div className="bottom">
+                                                <div
+                                                    className="button"
+                                                    onClick={() =>
+                                                        openCreatePostModal()
+                                                    }
+                                                >
+                                                    <IconImage />
+                                                    <div>Ảnh</div>
+                                                </div>
+                                                <div
+                                                    className="button"
+                                                    onClick={() =>
+                                                        openCreatePostModal()
+                                                    }
+                                                >
+                                                    <IconVideo />
+                                                    <div>Video</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="post-list">
+                                        {postList.map((post) => (
+                                            <Post
+                                                key={post.postId}
+                                                refreshPost={getPosts}
+                                                {...post}
+                                            />
+                                        ))}
+                                        <div
+                                            style={{
+                                                height:
+                                                    postList.length === 0
+                                                        ? 600
+                                                        : 200,
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                paddingTop: 20,
+                                                maxHeight: "auto",
+                                            }}
+                                        >
+                                            {postList.length === 0 &&
+                                                "Không có bài đăng nào"}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {isOpenPostModal && (
-                        <PostModal
-                            open={isOpenPostModal}
-                            mode="create"
-                            onClose={() => setIsOpenPostModal(false)}
-                            onCreated={() => getPosts()}
-                        />
-                    )}
-                    <Loading open={isLoading} />
-                    {postRedux.isOpenPostDetail && (
-                        <PostDetail
-                            postId={postRedux.postDetailId}
-                            refreshPost={getPosts}
-                        />
-                    )}
+                )}
+                {tabIndex === 1 && (
+                    <div className="image-page-container">
+                        {imageList.map((i) => (
+                            <img
+                                key={i.content}
+                                src={`${baseUrl}/${i.content}`}
+                                alt=""
+                                onClick={() => {
+                                    dispatch(
+                                        updatePostState({
+                                            isOpenPostDetail: true,
+                                            postDetailId: i.postId,
+                                        })
+                                    );
+                                }}
+                            />
+                        ))}
+                        {imageList.length === 0 && (
+                            <div style={{display: "flex", width: "100%", justifyContent: "center"}}>
+                                Không có bức ảnh nào
+                            </div>
+                        )}
+                    </div>
+                )}
+                {tabIndex === 2 && (
+                    <div className="image-page-container">
+                        {videoList.map((i) => (
+                            <video
+                                key={i.content}
+                                onClick={() => {
+                                    dispatch(
+                                        updatePostState({
+                                            isOpenPostDetail: true,
+                                            postDetailId: i.postId,
+                                        })
+                                    );
+                                }}
+                            >
+                                <source src={`${baseUrl}/${i.content}`} />
+                            </video>
+                        ))}
+                        {videoList.length === 0 && (
+                            <div style={{display: "flex", width: "100%", justifyContent: "center"}}>
+                                Không có video nào
+                            </div>
+                        )}
+                    </div>
+                )}
+                {tabIndex === 3 && <div className="friend-page-container">
+                    <div className="request-container">
+                        {friendList.map((e) => (
+                            <div className="item">
+                                <div className="avatar" onClick={() => {navigate(`/profile/${e.accountId}`); setTabIndex(0)}}>
+                                    <img
+                                        src={e.avatar ? `${baseUrl}/${e.avatar}` : Images.defaultAvatar}
+                                        alt=""
+                                    />
+                                </div>
+                                <div className="username" onClick={() => {navigate(`/profile/${e.accountId}`); setTabIndex(0);}}>{e.name}</div>
+                                <div className="friend">
+                                    {e.mutualFriend} bạn chung
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
+                }
+                {isOpenPostModal && (
+                    <PostModal
+                        open={isOpenPostModal}
+                        mode="create"
+                        onClose={() => setIsOpenPostModal(false)}
+                        onCreated={() => getPosts()}
+                    />
+                )}
+                <Loading open={isLoading} />
+                {postRedux.isOpenPostDetail && (
+                    <PostDetail
+                        postId={postRedux.postDetailId}
+                        refreshPost={getPosts}
+                    />
+                )}
             </div>
         </div>
     );

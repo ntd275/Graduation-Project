@@ -153,7 +153,7 @@ function Register({ open, onClose }) {
                     row
                     name="row-radio-buttons-group"
                     value={gender}
-                    onChange={(e) => setGender(e.target.value)}
+                    onChange={(e) => setGender(e.target.value === "true")}
                 >
                     <FormControlLabel
                         value={true}

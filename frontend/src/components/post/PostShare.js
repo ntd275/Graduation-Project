@@ -2,13 +2,16 @@ import { Avatar } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { baseUrl } from "../../api/Api";
 import Images from "../../Images/Images";
+import { updatePostState } from "../../reduxs/slices/postSlice";
 import { getTimeStr } from "../../utils/TimeUtils";
 import PreviewGrid from "../previewGrid/PreviewGrid";
 import "./Post.scss";
+import {useDispatch} from "react-redux"
 
 
 function PostShare(props) {
     const [files, setFiles] = useState([]);
+    const dispatch = useDispatch();
     useEffect(() => {
         try {
             if (props.files) {
@@ -24,7 +27,15 @@ function PostShare(props) {
         if (!files.length) {
             return <></>;
         }
-        return <PreviewGrid files={files} isView />;
+        return <PreviewGrid files={files} isView onClick={() =>
+            props.isView && 
+            dispatch(
+                updatePostState({
+                    isOpenPostDetail: true,
+                    postDetailId: props.postId,
+                })
+            )
+        }/>;
     };
 
     return (

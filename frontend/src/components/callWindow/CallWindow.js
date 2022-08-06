@@ -18,6 +18,9 @@ import { ChatContext } from "../../App";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import CallEndIcon from "@mui/icons-material/CallEnd";
+import MicOffIcon from '@mui/icons-material/MicOff';
+import MicIcon from '@mui/icons-material/Mic';
+import VideocamIcon from '@mui/icons-material/Videocam';
 
 function CallWindow(props) {
     const [isLoading, setIsLoading] = useState(false);
@@ -256,13 +259,13 @@ function CallWindow(props) {
                                 className="btn"
                                 onClick={() => setIsMuted(!isMuted)}
                             >
-                                <VolumeOffIcon />
+                                {isMuted ? <MicIcon/> : <MicOffIcon/>}
                             </div>
                             <div
                                 className="btn"
                                 onClick={() => setIsVideoOff(!isVideoOff)}
                             >
-                                <VideocamOffIcon />
+                                {isVideoOff ? <VideocamIcon/> : <VideocamOffIcon />}
                             </div>
                             <div
                                 className="btn"
