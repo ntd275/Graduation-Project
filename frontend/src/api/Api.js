@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001";
+const baseUrl = "http://20.212.104.107:3001";
 
 const guest = axios.create({ timeout: 30000 });
 guest.defaults.withCredentials = true;

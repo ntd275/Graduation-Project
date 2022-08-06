@@ -55,7 +55,7 @@ function App() {
         };
         checkLogin().then(() => {
             getFriendRequestList();
-            const socket = io("http://localhost:3002", {
+            const socket = io("http://20.212.104.107:3002", {
                 transportOptions: {
                     polling: {
                         extraHeaders: {
