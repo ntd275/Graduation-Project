@@ -47,6 +47,7 @@ app.listen(port, () => console.log("Backend API running on :", port));
 
 let socketIds = {};
 let mapSocketIds = {};
+let activateUserList = [];
 
 // Socket.io chat realtime
 io.on("connection", (socket) => {
@@ -70,6 +71,10 @@ io.on("connection", (socket) => {
                 "a user connected, account devices: " +
                     socketIds[decoded.accountId]
             );
+            if (socketIds[decoded.accountId].length === 1){
+                activateUserList.push(decoded.accountId)
+                io.emit("activateUser", activateUserList)
+            }
         } catch (e) {
             console.log("Invalid token");
         }
@@ -84,9 +89,12 @@ io.on("connection", (socket) => {
                 }
             }
         }
-
-        // console.log(socketIds[userId])
+        if (socketIds[userId]?.length === 0){
+            activateUserList = activateUserList.filter(i => i !== userId)
+            io.emit("activateUser", activateUserList)
+        }
     });
+
     socket.on("chatmessage", async (msg) => {
         if (msg.conversationId && msg.receiver) {
             try {
@@ -124,6 +132,36 @@ io.on("connection", (socket) => {
                 for (let i = 0; i < socketIds[msg.accountId].length; i++) {
                     io.to(socketIds[msg.accountId][i]).emit(
                         "callReceive",
+                        msg,
+                    );
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+    socket.on("endCall", async (msg) => {
+        try {
+            if (socketIds[msg.accountId]) {
+                for (let i = 0; i < socketIds[msg.accountId].length; i++) {
+                    io.to(socketIds[msg.accountId][i]).emit(
+                        "endCall",
+                        msg,
+                    );
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+    socket.on("refuseCall", async (msg) => {
+        try {
+            if (socketIds[msg.accountId]) {
+                for (let i = 0; i < socketIds[msg.accountId].length; i++) {
+                    io.to(socketIds[msg.accountId][i]).emit(
+                        "refuseCall",
                         msg,
                     );
                 }

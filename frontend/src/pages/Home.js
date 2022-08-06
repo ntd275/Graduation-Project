@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Badge } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Api, { baseUrl } from "../api/Api";
 import Header from "../components/header/Header";
@@ -27,7 +27,6 @@ function Home() {
         try {
             const res = await Api.getPostsInNewFeed();
             setPostList(res.data.result);
-            console.log(res);
         } catch (err) {
             console.log(err);
         }
@@ -55,12 +54,27 @@ function Home() {
     const openChat = async (accountId) => {
         try {
             const res = await Api.createConversation(accountId);
-                dispatch(updateChatState({ chatList: [...chat.chatList, res.data.conversation]
-            }))
-        } catch(err) {
+            dispatch(
+                updateChatState({
+                    chatList: [
+                        ...chat.chatList.filter(
+                            (i) =>
+                                i.conversationId !==
+                                res.data.conversation.conversationId
+                        ),
+                        res.data.conversation,
+                    ],
+                    chatMinimumList: chat.chatMinimumList.filter(
+                        (i) =>
+                            i.conversationId !==
+                            res.data.conversation.conversationId
+                    ),
+                })
+            );
+        } catch (err) {
             console.log(err);
         }
-    }
+    };
 
     return (
         <div className="home">
@@ -73,7 +87,11 @@ function Home() {
                     >
                         <Avatar
                             sx={{ width: 36, height: 36 }}
-                            src={auth.avatar ? `${baseUrl}/${auth.avatar}` : Images.defaultAvatar}
+                            src={
+                                auth.avatar
+                                    ? `${baseUrl}/${auth.avatar}`
+                                    : Images.defaultAvatar
+                            }
                             style={{ marginLeft: "5px" }}
                         ></Avatar>
                         <div className="text">{auth.name}</div>
@@ -90,7 +108,9 @@ function Home() {
                         ></img>
                         <div className="text">Bạn bè</div>
                     </div>
-                    <div className="item" onClick={() => {}}>
+                    <div className="item" onClick={() => {dispatch(updateChatState({
+                        openConversationList: true,
+                    }))}}>
                         <img
                             src={Images.messenger2}
                             alt=""
@@ -106,12 +126,36 @@ function Home() {
                 <div className="right-side-bar">
                     <div className="contact">Người liên hệ</div>
                     {friendList.map((e) => (
-                        <div className="item" key={e.accountId} onClick={() => openChat(e.accountId)}>
-                            <Avatar
-                                sx={{ width: 36, height: 36 }}
-                                src={e.avatar ? `${baseUrl}/${e.avatar}` :Images.defaultAvatar}
-                                style={{ marginLeft: "5px" }}
-                            ></Avatar>
+                        <div
+                            className="item"
+                            key={e.accountId}
+                            onClick={() => openChat(e.accountId)}
+                        >
+                            <Badge
+                                variant="dot"
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "right",
+                                }}
+                                overlap="circular"
+                                color="success"
+                                sx={{
+                                    "& .MuiBadge-badge": {
+                                        backgroundColor: chat.activateUser.includes(e.accountId) ? "#44b700" : "#00000000",
+                                    },
+                                }}
+                            >
+                                <Avatar
+                                    sx={{ width: 36, height: 36 }}
+                                    src={
+                                        e.avatar
+                                            ? `${baseUrl}/${e.avatar}`
+                                            : Images.defaultAvatar
+                                    }
+                                    style={{ marginLeft: "5px" }}
+                                ></Avatar>
+                            </Badge>
+
                             <div className="text">{e.name}</div>
                         </div>
                     ))}
@@ -121,13 +165,17 @@ function Home() {
                         <div className="create-post">
                             <div className="top">
                                 <Avatar
-                                    src={auth.avatar ? `${baseUrl}/${auth.avatar}` : Images.defaultAvatar}
+                                    src={
+                                        auth.avatar
+                                            ? `${baseUrl}/${auth.avatar}`
+                                            : Images.defaultAvatar
+                                    }
                                 ></Avatar>
                                 <div
                                     className="input"
                                     onClick={() => openCreatePostModal()}
                                 >
-                                    Nguyễn ơi, bạn đang nghĩ gì thế?
+                                    {auth.name} ơi, bạn đang nghĩ gì thế?
                                 </div>
                             </div>
                             <div className="bottom">

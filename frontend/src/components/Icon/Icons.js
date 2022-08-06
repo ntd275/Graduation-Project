@@ -241,6 +241,10 @@ function IconAddFriend() {
   return <img className="i-icon-add-friend" src="https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/hh5EAPNUrPP.png" alt="" height="16" width="16"></img>
 }
 
+function IconPeople() {
+  return <i class="i-icon-people"></i>
+}
+
 export {
   IconVideo,
   IconImage,
@@ -268,4 +272,5 @@ export {
   IconNext,
   IconLikeActive,
   IconAddFriend,
+  IconPeople,
 };

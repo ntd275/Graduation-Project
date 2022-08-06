@@ -23,6 +23,10 @@ exports.createConversation = (account1, account2) => {
     });
 };
 
+exports.getConversationById = (id) => {
+    return knex("conversation").where("conversationId", id).first();
+};
+
 exports.deleteConversation = async (conversationId, accountId) => {
     const conversation = await knex("conversation")
         .where("conversationId", conversationId)

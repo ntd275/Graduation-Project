@@ -7,6 +7,7 @@ accountRouter.use(authMiddleWare.isAuth)
 accountRouter.get('/:id', accountController.getAccountById)
 accountRouter.put('/:id', accountController.editAccount)
 accountRouter.post("/change-password", accountController.changePassword)
+accountRouter.post("/search", accountController.search)
 
 accountRouter.use(notFound);
 module.exports = accountRouter

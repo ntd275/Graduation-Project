@@ -60,3 +60,20 @@ exports.changePassword = async (req, res) => {
         });
     }
 };
+
+exports.search = async (req, res) => {
+    try {
+        const result = await Account.searchByName(req.body.name, req.body.page || 1, req.body.perPage || 100)
+        result.data = result.data.map(i => ({...i,password: undefined}))
+        return res.status(200).json({
+            success: true,
+            result: result,
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            err,
+        });
+    }
+};

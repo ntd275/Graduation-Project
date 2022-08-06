@@ -23,7 +23,7 @@ exports.deletePost = (postId) => {
 }
 
 exports.search = (searchValue, page, perPage) => {
-    return knex('post').where('content', 'like', `%${searchValue}%`).paginate({ perPage: perPage, currentPage: page, isLengthAware: true })
+    return knex('post').whereRaw('LOWER(content) LIKE ?', '%'+searchValue.toLowerCase()+'%').join("account", "accountId", "=", "author").paginate({ perPage: perPage, currentPage: page, isLengthAware: true })
 }
 
 exports.getPostByAccountId = (accountId) => {

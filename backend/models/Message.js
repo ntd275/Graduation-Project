@@ -1,8 +1,13 @@
 const knex = require("./database");
 
-exports.getMessageList = (conversationId) => {
+exports.getMessageList = (conversationId, time) => {
     return knex("message")
-        .where("conversationId", conversationId);
+        .where("conversationId", conversationId).andWhere("createdTime", ">", time );
+};
+
+exports.getLastMessage = (conversationId, time) => {
+    return knex("message")
+        .where("conversationId", conversationId).andWhere("createdTime", ">", time ).orderBy("createdTime", "desc").first();
 };
 
 exports.createMessage = (conversationId, sender, message) => {
@@ -10,6 +15,7 @@ exports.createMessage = (conversationId, sender, message) => {
         conversationId: conversationId,
         sender: sender,
         message: message,
+        createdTime: new Date(),
     });
 };
 
@@ -19,6 +25,8 @@ exports.createMessageCall = (conversationId, sender, callDuration) => {
         sender: sender,
         message: "",
         callDuration: callDuration,
+        createdTime: new Date(),
+        isCall: true,
     });
 };
 

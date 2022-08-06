@@ -1,4 +1,5 @@
 const Message = require('../models/Message');
+const Conversation = require('../models/Conversation');
 
 exports.createMessage = async (req, res) => {
     try {
@@ -35,7 +36,6 @@ exports.createMessageCall = async (req, res) => {
         await Message.createMessageCall(req.body.conversationId, req.jwtDecoded.accountId, req.body.callDuration)
         return res.status(200).json({
             success: true,
-            result: conversationList
         })
     } catch (err) {
         console.log(err);
@@ -48,7 +48,14 @@ exports.createMessageCall = async (req, res) => {
 
 exports.getMessageInConversation = async (req, res) => {
     try {
-        const messageList = await Message.getMessageList(req.body.conversationId)
+        const conversation = await Conversation.getConversationById(req.body.conversationId);
+        let time;
+        if (conversation.account1 === req.jwtDecoded.accountId) {
+            time = new Date(conversation.account1DeleteTime);
+        } else {
+            time = new Date(conversation.account2DeleteTime);
+        }
+        const messageList = await Message.getMessageList(req.body.conversationId, time)
         return res.status(200).json({
             success: true,
             result: messageList

@@ -16,6 +16,7 @@ import io from "socket.io-client";
 import { updateChatState } from "./reduxs/slices/chatSlice";
 import CallWindow from "./components/callWindow/CallWindow";
 import Account from "./pages/Account";
+import Search from "./pages/Search";
 
 const ChatContext =  createContext({});
 export {ChatContext}
@@ -73,6 +74,11 @@ function App() {
                     opponentPeerId: msg.peerId
                 }))
             })
+            socket.on("activateUser", (ids) => {
+                dispatch(updateChatState({
+                    activateUser: ids,
+                }))
+            })
         });
     }, [auth.needUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -119,8 +125,9 @@ function App() {
                 <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/friend" element={<Friend />} />
                 <Route path="/account" element={<Account />} />
+                <Route path="/search" element={<Search />} />
             </Routes>
-            {chat.chatList.length > 0 && <Messenger />}
+            {(chat.chatList.length > 0 || chat.chatMinimumList.length > 0)&& <Messenger />}
             {chat.isCallOpen && <CallWindow/>}
         </ChatContext.Provider>
     );

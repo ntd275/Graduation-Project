@@ -32,7 +32,7 @@ exports.deleteAccount = (accountId) => {
 }
 
 exports.searchByName = (accountName, page, perPage) => {
-    return knex('account').where('name', 'like', `%${accountName}%`).paginate({ perPage: perPage, currentPage: page, isLengthAware: true })
+    return knex('account').whereRaw('LOWER(name) LIKE ?', '%'+accountName.toLowerCase()+'%').paginate({ perPage: perPage, currentPage: page, isLengthAware: true })
 }
 
 exports.updatePassword = (accountId, newPassword) => {

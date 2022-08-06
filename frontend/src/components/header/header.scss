@@ -55,3 +55,45 @@
         }
     }
 }
+
+.conversation-list-container {
+    max-height: 600px;
+    overflow: auto;
+    .title {
+        padding: 10px;
+        font-weight: 600;
+        font-size: 20px;
+    }
+    .conversation {
+        padding: 10px;
+        display: flex;
+        width: 300px;
+        cursor: pointer;
+        .info {
+            margin-left: 20px;
+            .name {
+                font-size: 15px;
+                font-weight: 600;
+            }
+            .message {
+                font-size: 13px;
+                font-weight: 400;
+                max-width: 200px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+        &:hover {
+            background-color: #f1f1f1;
+        }
+        .options {
+            opacity: 0;
+            margin-left: auto;
+            margin-right: 20px;
+            align-self: center;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}

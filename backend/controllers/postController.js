@@ -96,3 +96,19 @@ exports.getPostListInNewFeed = async (req, res) => {
         });
     };
 };
+
+exports.search = async (req, res) => {
+    try {
+        const postList = await Post.search(req.body.keyword, req.body.page || 1, req.body.perPage || 100);
+        return res.status(200).json({
+            success: true,
+            result: postList
+        })
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            err,
+        });
+    };
+};
