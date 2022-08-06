@@ -28,7 +28,7 @@ exports.login = async (req, res) => {
         let accessToken = await jwtHelper.generateToken(user, config.accessTokenSecret, config.accessTokenLife)
         let refreshToken = await jwtHelper.generateToken(user, config.refreshTokenSecret, config.refreshTokenLife)
         tokenList[refreshToken] = { accessToken, refreshToken };
-        res.cookie('refreshToken', refreshToken, { secure: false, httpOnly: true, maxAge: config.refreshTokenCookieLife, sameSite: "None"});
+        res.cookie('refreshToken', refreshToken, { secure: true, httpOnly: true, maxAge: config.refreshTokenCookieLife, sameSite: "None"});
         return res.status(200).json({
             success: true,
             accessToken,
