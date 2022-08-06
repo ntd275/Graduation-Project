@@ -1,0 +1,121 @@
+.friend-page {
+    .container {
+        width: 100%;
+        display: flex;
+        padding-top: 56px;
+        .left-page {
+            width: 360px;
+            padding-left: 16px;
+            background-color: #fff;
+            min-height: calc(100vh - 56px);
+            .title {
+                margin-top: 10px;
+                font-size: 24px;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+            .item {
+                cursor: pointer;
+                display: flex;
+                padding-left: 10px;
+                height: 52px;
+                align-items: center;
+                border-radius: 5px;
+                margin-right: 10px;
+                &:hover {
+                    background-color: #f0f2f5;
+                }
+                .icon {
+                    height: 36px;
+                    width: 36px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                    background-color: #e4e6eb;
+                }
+                .value {
+                    font-size: 17px;
+                    font-weight: 500;
+                    padding-left: 10px;
+                }
+            }
+
+            .act {
+                background-color: #f2f2f2;
+            }
+        }
+        .right-page {
+            flex-grow: 1;
+            padding: 20px;
+            .request-friend {
+                margin-top: 10px;
+                .title {
+                    font-size: 20px;
+                    font-weight: 700;
+                }
+                .request-container {
+                    width: 100%;
+                    margin-top: 20px;
+                    display: grid;
+                    grid-template-columns: repeat(5,minmax(200px, 1fr));
+                    grid-gap: 10px;
+                    .item {
+                        width: 200px;
+                        border-radius: 15px;
+                        overflow: hidden;
+                        padding-bottom: 20px;
+                        background-color: #fff;
+                        .avatar {
+                            img {
+                                border-top-left-radius: 15px;
+                                border-top-right-radius: 15px;
+                                width: 200px;
+                                height: 200px;
+                                object-fit: cover;
+                            }
+                        }
+                        .username {
+                            padding-left: 10px;
+                            font-size: 17px;
+                            font-weight: 600;
+                            line-height: 20px;
+                        }
+                        .friend {
+                            padding-left: 10px;
+                            color:  rgb(101, 103, 107);
+                            font-size: 15px;
+                            font-weight: 400;
+                        }
+                        .btn {
+                            margin-top: 8px;
+                            margin-left: 10px;
+                            margin-right: 10px;
+                            padding-top: 5px;
+                            padding-bottom: 5px;
+                            border-radius: 5px;
+                            font-size: 15px;
+                            font-weight: 600;
+                            display: flex;
+                            height: 36px;
+                            justify-content: center;
+                            cursor: pointer;
+                            align-items: center;
+                        }
+                        .btn-accept {
+                            background-color: #1b74e4;
+                            color: #fff;
+                        }
+                        .btn-refuse {
+                            background-color: #e4e6eb;
+                        }
+                        .btn-add {
+                            background-color: #e7f3ff;
+                            color: rgb(24, 119, 242);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

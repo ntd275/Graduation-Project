@@ -1,0 +1,61 @@
+.file-post-grid {
+    .image-container-1 {
+        width: 100%;
+        display: flex;
+    }
+    .image-container-2 {
+        width: 100%;
+        display: flex;
+        .image {
+            width: 50%;
+        }
+    }
+    .image-container-3 {
+        width: 100%;
+        display: flex;
+        .image {
+            width: 33.33333333%;
+        }
+    }
+    .image {
+        width: 100%;
+        position: relative;
+        .btn-remove {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ffffffaa;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        img {
+            width: 100%;
+            object-fit: cover;
+            border: 2px #fff solid;
+        }
+        video {
+            width: 100%;
+            object-fit: cover;
+            border: 2px #fff solid;
+        }
+        .mask {
+            background-color: #00000033;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            color: #fff;
+            font-weight: 400;
+            position: absolute;
+            top: 2px;
+            bottom: 2px;
+            right: 2px;
+            left: 2px;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import { Avatar } from "@mui/material";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Images from "../../Images/Images";
 import { getTimeStr } from "../../utils/TimeUtils";
 import {
@@ -25,6 +25,7 @@ import { useSnackbar } from "notistack";
 import PostShare from "./PostShare";
 import { updatePostState } from "../../reduxs/slices/postSlice";
 import { useNavigate } from "react-router-dom";
+import { ChatContext } from "../../App";
 
 function Post(props) {
     const [likes, setLikes] = useState([]);
@@ -51,6 +52,8 @@ function Post(props) {
     const dispatch = useDispatch();
     const postRedux = useSelector((state) => state.post);
     const navigate = useNavigate();
+    const socket = useContext(ChatContext);
+    const bottomCommentRef = useRef();
 
     useEffect(() => {
         try {
@@ -234,7 +237,11 @@ function Post(props) {
             setCommentValue("");
             try {
                 await Api.createComment(props.postId, temp);
-                getComments();
+                socket.emit("comment", {
+                    accountId: props.author,
+                    postId: props.postId,
+                })
+                await getComments();
             } catch (err) {
                 console.log(err);
             }
@@ -341,6 +348,10 @@ function Post(props) {
         ));
     };
 
+    useEffect(() => {
+        bottomCommentRef.current.scrollTop= bottomCommentRef.current?.scrollHeight;
+    }, [comments])
+
     return (
         <div className="post-container">
             <div className="post-header">
@@ -427,8 +438,9 @@ function Post(props) {
             </div>
             <div className="comment-container">
                 <div className="h-ruler"></div>
-                <div style={{overflow: "auto", maxHeight: 300}}>
+                <div ref={bottomCommentRef}  style={{overflow: "auto", maxHeight: 300}}>
                     {renderComments()}
+                    <div style={{height: 1, opacity: 0}}></div>
                 </div>
                 <StyledMenu
                     anchorEl={commentArchor}

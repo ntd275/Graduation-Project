@@ -170,6 +170,21 @@ io.on("connection", (socket) => {
             console.log(e);
         }
     });
+
+    socket.on("comment", async (msg) => {
+        try {
+            if (socketIds[msg.accountId]) {
+                for (let i = 0; i < socketIds[msg.accountId].length; i++) {
+                    io.to(socketIds[msg.accountId][i]).emit(
+                        "comment",
+                        msg,
+                    );
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    });
 });
 
 chatServer.listen(3002, () => {

@@ -1,0 +1,90 @@
+.search-page {
+    .container {
+        width: 100%;
+        display: flex;
+        padding-top: 56px;
+        .left-page {
+            width: 360px;
+            padding-left: 16px;
+            background-color: #fff;
+            min-height: calc(100vh - 56px);
+            .title {
+                margin-top: 10px;
+                font-size: 24px;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+            .item {
+                cursor: pointer;
+                display: flex;
+                padding-left: 10px;
+                height: 52px;
+                align-items: center;
+                border-radius: 5px;
+                margin-right: 10px;
+                &:hover {
+                    background-color: #f0f2f5;
+                }
+                .icon {
+                    height: 36px;
+                    width: 36px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                    background-color: #e4e6eb;
+                }
+                .value {
+                    font-size: 17px;
+                    font-weight: 500;
+                    padding-left: 10px;
+                }
+            }
+
+            .act {
+                background-color: #f2f2f2;
+            }
+        }
+        .right-page {
+            flex-grow: 1;
+            padding: 20px;
+            .request-friend {
+                margin-top: 10px;
+                .title {
+                    font-size: 20px;
+                    font-weight: 700;
+                }
+                .request-container {
+                    width: 100%;
+                    margin-top: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    overflow: auto;
+                    height: calc(100vh - 156px);
+                    .item {
+                        min-height: 100px;
+                        width: 680px;
+                        display: flex;
+                        margin-top: 16px;
+                        background-color: #fff;
+                        border-radius: 8px;
+                        height: 100px;
+                        align-items:  center;
+                        .avatar {
+                            margin-left: 20px;
+                        }
+                        .username {
+                            cursor: pointer;
+                            font-size: 17px;
+                            font-weight: 600;
+                        }
+                        .gender {
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

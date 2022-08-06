@@ -17,6 +17,7 @@ import { updateChatState } from "./reduxs/slices/chatSlice";
 import CallWindow from "./components/callWindow/CallWindow";
 import Account from "./pages/Account";
 import Search from "./pages/Search";
+import { updatePostState } from "./reduxs/slices/postSlice";
 
 const ChatContext =  createContext({});
 export {ChatContext}
@@ -29,6 +30,7 @@ function App() {
     const chat = useSelector((state) => state.chat)
     const [message, setMessage] = useState();
     const auth = useSelector((state) => state.auth);
+    const postRedux = useSelector((state) => state.post);
 
     useEffect(() => {
         const checkLogin = async () => {
@@ -78,6 +80,16 @@ function App() {
                 dispatch(updateChatState({
                     activateUser: ids,
                 }))
+            })
+            socket.on("comment", (msg) => {
+                dispatch(
+                    updatePostState({
+                        needRefreshPost: [
+                            ...postRedux.needRefreshPost,
+                            { postId: msg.postId, type: "comment" },
+                        ],
+                    })
+                );
             })
         });
     }, [auth.needUpdate]); // eslint-disable-line react-hooks/exhaustive-deps

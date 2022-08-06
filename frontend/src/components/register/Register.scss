@@ -1,0 +1,40 @@
+.register-modal-title {
+    display: flex;
+    align-items: center;
+    .btn-close {
+        margin-left: auto;
+        cursor: pointer;
+    }
+}
+
+.register-modal {
+    width: 432px;
+    padding-left: 16px;
+    padding-right: 16px;
+    .input {
+        margin-top: 10px;
+        width: 100%;
+    }
+    .gender {
+        margin-top: 10px;
+    }
+    .error {
+        margin-top: 8px;
+        color: red;
+        font-size: 13px;
+    }
+    .btn-save {
+        cursor: pointer;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(66, 183, 42);
+        color: #fff;
+        border-radius: 6px;
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+}
