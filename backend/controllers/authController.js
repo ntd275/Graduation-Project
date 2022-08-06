@@ -28,7 +28,7 @@ exports.login = async (req, res) => {
         let accessToken = await jwtHelper.generateToken(user, config.accessTokenSecret, config.accessTokenLife)
         let refreshToken = await jwtHelper.generateToken(user, config.refreshTokenSecret, config.refreshTokenLife)
         tokenList[refreshToken] = { accessToken, refreshToken };
-        res.cookie('refreshToken', refreshToken, { secure: false, httpOnly: true, maxAge: config.refreshTokenCookieLife, sameSite: "Lax" });
+        res.cookie('refreshToken', refreshToken, { secure: false, httpOnly: true, maxAge: config.refreshTokenCookieLife, sameSite: "Lax", domain:"http://hola.southeastasia.cloudapp.azure.com/" });
         return res.status(200).json({
             success: true,
             accessToken,
