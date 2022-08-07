@@ -5,7 +5,7 @@ import Profile from "./pages/Profile";
 import Friend from "./pages/Friend";
 import Login from "./pages/Login";
 import { createContext, useEffect, useState } from "react";
-import Api from "./api/Api";
+import Api, { socketUrl } from "./api/Api";
 import ForgotPassword from "./pages/ForgotPassword";
 import jwt_decode from "jwt-decode";
 import { useSelector, useDispatch } from "react-redux";
@@ -55,7 +55,7 @@ function App() {
         };
         checkLogin().then(() => {
             getFriendRequestList();
-            const socket = io("http://20.212.104.107:3002", {
+            const socket = io(socketUrl, {
                 transportOptions: {
                     polling: {
                         extraHeaders: {
