@@ -1,6 +1,8 @@
 import axios from "axios";
-const baseUrl = "http://hola.southeastasia.cloudapp.azure.com:3001";
-const socketUrl = "http://20.212.104.107:3002";
+//const baseUrl = "http://hola.southeastasia.cloudapp.azure.com:3001";
+// const socketUrl = "http://20.212.104.107:3002";
+const baseUrl = "http://localhost:3001";
+const socketUrl = "http://localhost:3002";
 
 const guest = axios.create({ timeout: 30000 });
 guest.defaults.withCredentials = true;
@@ -204,6 +206,9 @@ const Api = {
     searchPost: (keyword) => {
         return user.post(`${baseUrl}/post/search`, {keyword: keyword});
     },
+    getNotifications: () => {
+        return user.get(`${baseUrl}/post/notifications`);
+    }
 }
 
 export {baseUrl, socketUrl};

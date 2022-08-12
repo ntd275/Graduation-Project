@@ -16,6 +16,8 @@ import { updateChatState } from "../../reduxs/slices/chatSlice";
 import { IconLike3, IconThreeDot } from "../Icon/Icons";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteAlert from "../deleteAlert/DeleteAlert";
+import { updatePostState } from "../../reduxs/slices/postSlice";
+import { getTimeStr } from "../../utils/TimeUtils";
 
 function Header() {
     const navigate = useNavigate();
@@ -26,12 +28,14 @@ function Header() {
     const search = useSelector((state) => state.search);
     const messengerRef = useRef();
     const dispatch = useDispatch();
-    const [isConversationOpen, setIsConversationOpen] = useState(false);
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const chat = useSelector((state) => state.chat);
     const [archor, setArchor] = useState();
     const [isConversationMenuOpen, setIsConversationMenuOpen] = useState(false);
     const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
     const [selectedConversation, setSelectedConversation] = useState();
+    const notificationRef = useRef();
+    const post = useSelector((state) => state.post);
 
     const closeMenu = () => {
         setIsMenuOpen(false);
@@ -60,9 +64,22 @@ function Header() {
         getConversationList();
     }, [chat.needUpdateChatList, chat.needUpdateConversationList]);
 
-    useEffect(() => {
+    const getNotifications = async () => {
+        try {
+            const res = await Api.getNotifications();
+            dispatch(
+                updatePostState({
+                    notificationList: res.data.result.sort((a,b) => new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime()),
+                })
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
-    }, [chat.openConversationList])
+    useEffect(() => {
+        getNotifications();
+    }, [isNotificationOpen])
 
     const openChat = async (accountId) => {
         try {
@@ -219,6 +236,75 @@ function Header() {
         );
     };
 
+    const getNotiText = (type) => {
+        if(type === "like") {
+            return "đã thích bài đăng của bạn";
+        }
+        if(type === "comment") {
+            return "đã bình luận về bài của bạn";
+        }
+        if(type === "share") {
+            return "đã chia sẻ bài của bạn";
+        }
+        return "đã tương tác với bài của bạn";
+    }
+
+    const renderNotifications = () => {
+        return (
+            <Popover
+                open={isNotificationOpen}
+                anchorEl={notificationRef.current}
+                onClose={() => setIsNotificationOpen(false)}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                }}
+                disableScrollLock={true}
+            >
+                <div className="conversation-list-container">
+                    <div className="title">Thông báo</div>
+                    {post.notificationList
+                        .map((item) => (
+                            <div
+                                key={Math.random()}
+                                className="conversation"
+                                onClick={() => {
+                                    dispatch(
+                                        updatePostState({
+                                            isOpenPostDetail: true,
+                                            postDetailId: item.postId,
+                                        })
+                                    );
+                                    setIsNotificationOpen(false);
+                                }}
+                            >
+                                <Avatar
+                                    className="avatar"
+                                    src={
+                                        item.avatar
+                                            ? `${baseUrl}/${item.avatar}`
+                                            : Images.defaultAvatar
+                                    }
+                                ></Avatar>
+                                <div className="info">
+                                    <span className="name">
+                                        {item.name + " "}
+                                    </span>
+                                    <span>
+                                        {getNotiText(item.type) + " "}
+                                    </span>
+                                    <div className="message">
+                                        {getTimeStr(new Date(item.createdTime))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        {post.notificationList.length === 0 && <div className="conversation">Không có thông báo</div>}
+                </div>
+            </Popover>
+        );
+    } 
+
     const deletePost = async () => {
         try {
             await Api.deleteConversation(selectedConversation)
@@ -292,6 +378,8 @@ function Header() {
                 <Avatar
                     sx={{ bgcolor: "#e4e6eb" }}
                     style={{ marginLeft: "10px" }}
+                    ref={notificationRef}
+                    onClick={() => setIsNotificationOpen(true)}
                 >
                     <img
                         alt=""
@@ -299,6 +387,7 @@ function Header() {
                         style={{ width: "24px", height: "auto" }}
                     />
                 </Avatar>
+                {renderNotifications()}
                 <Avatar
                     sx={{ bgcolor: "#e4e6eb" }}
                     style={{ marginLeft: "10px", marginRight: "20px" }}

@@ -29,3 +29,15 @@ exports.search = (searchValue, page, perPage) => {
 exports.getPostByAccountId = (accountId) => {
     return knex('post').whereIn('author', accountId).join("account", "accountId", "=", "author").orderBy("createdTime", "desc");
 }
+
+exports.getLikeNotifications = (accountId) => {
+    return knex('post').where('author', accountId).join("like", "like.postId", "=", "post.postId").join("account", "account.accountId", "=", "like.accountId");
+}
+
+exports.getCommentNotifications = (accountId) => {
+    return knex('post').where('author', accountId).join("comment", "comment.postId", "=", "post.postId").join("account", "account.accountId", "=", "comment.accountId");
+}
+
+exports.getShareNotifications = (accountId) => {
+    return knex('post').where('post.author', accountId).join("post as p", "p.sharePostId", "=", "post.postId").join("account", "account.accountId", "=", "p.author");
+}

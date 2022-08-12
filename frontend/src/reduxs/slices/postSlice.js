@@ -5,6 +5,7 @@ export const postSlice = createSlice({
     initialState: {
         needRefreshPost: [],
         isOpenPostDetail: false,
+        notificationList: [],
     },
     reducers: {
         updatePostState: (state, action) => {

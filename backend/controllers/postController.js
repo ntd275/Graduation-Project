@@ -1,5 +1,7 @@
 const Post = require('../models/Post');
 const Friend = require('../models/Friend');
+const Like = require('../models/Like');
+const Comment = require('../models/Comment');
 
 exports.createPost = async (req, res) => {
     try {
@@ -103,6 +105,36 @@ exports.search = async (req, res) => {
         return res.status(200).json({
             success: true,
             result: postList
+        })
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            err,
+        });
+    };
+};
+
+exports.getNotifications = async (req, res) => {
+    try {
+        const like = (await Post.getLikeNotifications(req.jwtDecoded.accountId)).map(i => ({
+            ...i,
+            type: 'like',
+            password: undefined,
+        }));
+        const comment = (await Post.getCommentNotifications(req.jwtDecoded.accountId)).map(i => ({
+            ...i,
+            type: 'comment',
+            password: undefined,
+        }));
+        const share = (await Post.getShareNotifications(req.jwtDecoded.accountId)).map(i => ({
+            ...i,
+            type: 'share',
+            password: undefined,
+        }));
+        return res.status(200).json({
+            success: true,
+            result: [...like, ...comment, ...share]
         })
     } catch (err) {
         console.log(err);

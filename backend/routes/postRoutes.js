@@ -10,6 +10,7 @@ postRouter.put('/:id', postController.editPost)
 postRouter.delete('/:id', postController.deletePost)
 postRouter.get('/get-post-in-profile/:id', postController.getPostListInProfile)
 postRouter.get('/get-post-in-new-feed', postController.getPostListInNewFeed)
+postRouter.get('/notifications', postController.getNotifications)
 postRouter.get('/:id', postController.getPostById)
 
 postRouter.use(notFound);
