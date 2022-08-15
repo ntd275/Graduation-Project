@@ -63,7 +63,7 @@ exports.changePassword = async (req, res) => {
 
 exports.search = async (req, res) => {
     try {
-        const result = await Account.searchByName(req.body.name, req.body.page || 1, req.body.perPage || 100)
+        const result = await Account.searchByName(req.body.name, req.body.gender, req.body.page || 1, req.body.perPage || 100)
         result.data = result.data.map(i => ({...i,password: undefined}))
         return res.status(200).json({
             success: true,

@@ -31,7 +31,10 @@ exports.deleteAccount = (accountId) => {
     return knex('account').where('accountId', accountId).del()
 }
 
-exports.searchByName = (accountName, page, perPage) => {
+exports.searchByName = (accountName,gender, page, perPage) => {
+    if(gender !==undefined) {
+        return knex('account').whereRaw('LOWER(name) LIKE ?', '%'+ accountName.toLowerCase()+'%').andWhere("gender", gender).paginate({ perPage: perPage, currentPage: page, isLengthAware: true })
+    }
     return knex('account').whereRaw('LOWER(name) LIKE ?', '%'+accountName.toLowerCase()+'%').paginate({ perPage: perPage, currentPage: page, isLengthAware: true })
 }
 

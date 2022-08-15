@@ -27,10 +27,14 @@ function Search() {
     const [isLoading, setIsLoading] = useState(true);
     const search = useSelector((state) => state.search);
     const postRedux = useSelector((state) => state.post);
+    const [maleList, setMaleList] = useState([]);
+    const [femaleList, setFemaleList] = useState([]);
 
     useEffect(() => {
         getPostList();
         getPeopleList();
+        getGenderList(1);
+        getGenderList(0);
     }, [search.searchValue]);
 
     const getPostList = async () => {
@@ -46,6 +50,19 @@ function Search() {
         try {
             const res = await Api.searchPeople(search.searchValue);
             setPeopleList(res.data.result.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const getGenderList = async (gender) => {
+        try {
+            const res = await Api.searchPeople(search.searchValue, gender);
+            if (gender === 0) {
+                setFemaleList(res.data.result.data);
+            } else {
+                setMaleList(res.data.result.data);
+            }
         } catch (err) {
             console.log(err);
         }
@@ -119,6 +136,102 @@ function Search() {
         return <></>;
     };
 
+    const renderMale = () => {
+        if (selectedMenu === "male") {
+            return (
+                <div className="request-friend">
+                    <div className="title">Mọi người</div>
+                    <div className="request-container">
+                        {maleList.map((e) => (
+                            <div className="item" key={e.accountId}>
+                                <Avatar
+                                    className="avatar"
+                                    src={
+                                        e.avatar
+                                            ? `${baseUrl}/${e.avatar}`
+                                            : Images.defaultAvatar
+                                    }
+                                    onClick={() =>
+                                        navigate(`/profile/${e.accountId}`)
+                                    }
+                                    sx={{ width: 60, height: 60 }}
+                                />
+                                <div style={{ marginLeft: 10 }}>
+                                    <div
+                                        className="username"
+                                        onClick={() =>
+                                            navigate(`/profile/${e.accountId}`)
+                                        }
+                                    >
+                                        {e.name}
+                                    </div>
+                                    <div className="gender">
+                                        Giới tính:{" "}
+                                        {e.gender === 1 ? "Nam" : "Nữ"}
+                                    </div>
+                                    {!!e.address && (
+                                        <div className="address">
+                                            Sống tại {e.address ?? "không rõ"}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+        return <></>;
+    }
+
+    const renderFemale = () => {
+        if (selectedMenu === "female") {
+            return (
+                <div className="request-friend">
+                    <div className="title">Mọi người</div>
+                    <div className="request-container">
+                        {femaleList.map((e) => (
+                            <div className="item" key={e.accountId}>
+                                <Avatar
+                                    className="avatar"
+                                    src={
+                                        e.avatar
+                                            ? `${baseUrl}/${e.avatar}`
+                                            : Images.defaultAvatar
+                                    }
+                                    onClick={() =>
+                                        navigate(`/profile/${e.accountId}`)
+                                    }
+                                    sx={{ width: 60, height: 60 }}
+                                />
+                                <div style={{ marginLeft: 10 }}>
+                                    <div
+                                        className="username"
+                                        onClick={() =>
+                                            navigate(`/profile/${e.accountId}`)
+                                        }
+                                    >
+                                        {e.name}
+                                    </div>
+                                    <div className="gender">
+                                        Giới tính:{" "}
+                                        {e.gender === 1 ? "Nam" : "Nữ"}
+                                    </div>
+                                    {!!e.address && (
+                                        <div className="address">
+                                            Sống tại {e.address ?? "không rõ"}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+        return <></>;
+    }
+
     return (
         <div className="search-page">
             <Header />
@@ -147,10 +260,34 @@ function Search() {
                         </div>
                         <div className="value">Bài viết</div>
                     </div>
+                    <div
+                        className={`item ${
+                            selectedMenu === "male" ? "act" : ""
+                        }`}
+                        onClick={() => setSelectedMenu("male")}
+                    >
+                        <div className="icon">
+                        <IconFriend />
+                        </div>
+                        <div className="value">Nam</div>
+                    </div>
+                    <div
+                        className={`item ${
+                            selectedMenu === "female" ? "act" : ""
+                        }`}
+                        onClick={() => setSelectedMenu("female")}
+                    >
+                        <div className="icon">
+                        <IconFriend />
+                        </div>
+                        <div className="value">Nữ</div>
+                    </div>
                 </div>
                 <div className="right-page">
                     {renderPeople()}
                     {redenPost()}
+                    {renderMale()}
+                    {renderFemale()}
                 </div>
                 {postRedux.isOpenPostDetail && (
                 <PostDetail
