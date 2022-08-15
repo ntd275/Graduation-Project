@@ -191,6 +191,7 @@ function Header() {
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setArchor(e.target);
+                                        setSelectedConversation(item.conversationId)
                                         setIsConversationMenuOpen(true);
                                     }}
                                 >
@@ -211,7 +212,6 @@ function Header() {
                                     <MenuItem
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            setSelectedConversation(item.conversationId)
                                             setIsDeleteAlertOpen(true);
                                             setIsConversationMenuOpen(false);
                                             
@@ -230,7 +230,7 @@ function Header() {
                     title="Xác nhận xóa cuộc trò chuyện?"
                     open={isDeleteAlertOpen}
                     onClose={() => setIsDeleteAlertOpen(false)}
-                    onConfirm={() => deletePost()}
+                    onConfirm={() => deleteConversation()}
                 />
             </Popover>
         );
@@ -305,7 +305,7 @@ function Header() {
         );
     } 
 
-    const deletePost = async () => {
+    const deleteConversation = async () => {
         try {
             await Api.deleteConversation(selectedConversation)
             setIsDeleteAlertOpen(false)
